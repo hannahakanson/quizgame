@@ -164,9 +164,8 @@ const students = [
 
 //Query selector consts
 const studentImageEl = document.querySelector('#studentImg');
-const randomBtn = document.querySelector("#random-btn");
-const nameTestBtn = document.querySelector("#name-test");
 const btnContainer = document.querySelector("#button-container");
+
 
 //Variables for score
 let totalGuesses = 0;
@@ -175,45 +174,87 @@ let correctGuesses = 0;
 //Boolean to control gameflow
 let continueGame = (true);
 
+//Function to shuffle an array
+const shuffleArray = array => {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      const temp = array[i];
+      array[i] = array[j];
+      array[j] = temp;
+    }
+};
+    //console.log(array);
+
+const randomizeStudent = () => {
+
+    //Shuffle the array
+    shuffleArray(students);
+
+    //Fyra random studenter
+    const randomStudents = students.slice(0,4);
+    //console.log(randomStudents);
+
+    //En är rätt
+    const rightStudent = randomStudents[0];
+    //console.log(rightStudent);
+
+    //Shuffle randomstudents
+    shuffleArray(randomStudents);
+
+    //Få fram fyra namn varav ett är rätt
+    const randomNames = randomStudents.map(students => students.name);
+    //console.log("random names:", randomNames);
+
+    //Sätt rätta studentens namn som bilden 
+    studentImageEl.src = rightStudent.image;
+
+    //Set the students name as data-name
+    studentImageEl.dataset.name = rightStudent.name;
+
+    //Set the students name in the button
+    randomNames.forEach(item => {
+        btnContainer.innerHTML += `<button class="btn btn-light m-2">${item}</button>`
+    });
+}
+
 
 //Added event listener to the button container
 btnContainer.addEventListener("click", e => {
 
+    btnContainer.innerHTML = "";
+
     //check if user clicked on a button
    if (e.target.tagName == "BUTTON") {
-
-        const randomObject = (students) => {
-            return students[Math.floor(Math.random() * students.length)];
-        };
-        
-        //Save the random student in an variable
-        let randomStudent = randomObject(students);
-
-        //Set the students image as the image src
-        studentImageEl.src = randomStudent.image;
-
-        //Set the students name as data-name
-        studentImageEl.dataset.name = randomStudent.name;
-
-        //Set the students name in the button
-        nameTestBtn.innerText = randomStudent.name;
     
         let clickedBtn = e.target;
 
         if (clickedBtn.innerText == studentImageEl.dataset.name) {
             console.log("Right answer!🥳");
-            totalGuesses += 1;
             correctGuesses += 1;
+            totalGuesses += 1;
             console.log(`You have ${correctGuesses} correct guesses out of a total of ${totalGuesses}`);
             
-        } else {
+        } else if (clickedBtn.innerText == "Start") {
+            console.log("Start");
+
+        } else if (clickedBtn.innerText !== studentImageEl.dataset.name) {
             console.log("Incorrect answer!🤥");
             totalGuesses += 1;
             console.log(`You have ${correctGuesses} correct guesses out of a total of ${totalGuesses}`);
-        }
-   }
+        } 
 
-});
+        //Call the function
+        randomizeStudent();
+   }
+        /*
+        !Gör en funktion för det som ska hända efter 20 gissningar
+        */
+
+
+}
+);
+
+
 
 
 
