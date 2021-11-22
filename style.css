@@ -2,6 +2,14 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    overflow: hidden;
+}
+
+main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 }
 
 body {
@@ -11,6 +19,7 @@ body {
 
 #studentImg {
     width: 300px;
+    border-radius: 10px;
 } 
 
 .button-container button {
@@ -18,8 +27,12 @@ body {
 }
 
 
-@media only screen and (min-width: 768px) {
+@media only screen and (min-width: 679px) {
     #studentImg {
-        width: auto;
+        width: 500px;
+    }
+
+    .button-container {
+        width: 800px;
     }
 }

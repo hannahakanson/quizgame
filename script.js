@@ -236,10 +236,10 @@ const gameEnd = () => {
 
 		if (correctGuesses > highscore) {
 			highscore = correctGuesses;
-			showHighscore.innerText = `New highscore!🥳`;
+			showHighscore.innerText = `New highscore! 🥳`;
 			console.log(highscore);
 		} else {
-			showHighscore.innerText = `Not a new highscore...Try again!`;
+			showHighscore.innerText = `Not your best...Try again!`;
 		}
 
 		//Play again
@@ -290,8 +290,8 @@ btnContainer.addEventListener("click", e => {
             console.log(`You have ${correctGuesses} correct guesses out of a total of ${totalGuesses}`);
 			clickedBtn.classList.replace("btn-light", "btn-success");
 
-			setTimeout(function(){ 
-				if (totalGuesses < 20) {
+			setTimeout(() => { 
+				if (totalGuesses < 10) {
 					//Call the function
 					randomizeStudent();
 					} else {
@@ -306,8 +306,8 @@ btnContainer.addEventListener("click", e => {
             console.log(`You have ${correctGuesses} correct guesses out of a total of ${totalGuesses}`);
 			clickedBtn.classList.replace("btn-light", "btn-danger");
 
-			setTimeout(function(){ 
-				if (totalGuesses < 20) {
+			setTimeout(() => { 
+				if (totalGuesses < 10) {
 					//Call the function
 					randomizeStudent();
 					} else {
