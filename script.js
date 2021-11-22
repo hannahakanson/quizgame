@@ -1,7 +1,6 @@
-//Array with all students
-/*
-*/
+//** QUIZ GAME */
 
+//Array with all students
 const students = [
 	{
 		"name" : "Adi Dzocaj",
@@ -169,14 +168,16 @@ console.log(cloneStudents);
 const studentImageEl = document.querySelector('#studentImg');
 const btnContainer = document.querySelector("#button-container");
 const showResults = document.querySelector("#correct-answers");
-const highScore = [];
+const playAgainContainer = document.querySelector("#play-again-container");
+const showHighscore = document.querySelector("#highscore");
+
+let playAgain;
 
 //Variables for score
 let totalGuesses = 0;
 let correctGuesses = 0;
+let highscore = 0;
 
-//Boolean to control gameflow
-let continueGame = (true);
 
 //Function to shuffle an array
 const shuffleArray = array => {
@@ -191,25 +192,27 @@ const shuffleArray = array => {
 
 const randomizeStudent = () => {
 
+	//Empty button-container
+	btnContainer.innerHTML = "";
+
     //Shuffle the array
     shuffleArray(students);
 
-    //Fyra random studenter
+	//!Kan man använda filter här istället?
+    //Get four random students
     const randomStudents = students.slice(0,4);
     //console.log(randomStudents);
 
-    //En är rätt
+    //The first one is correct
     const rightStudent = randomStudents[0];
-    //console.log(rightStudent);
 
-    //Shuffle randomstudents för att den rätta inte ska komma som första knapp
+    //Shuffle randomstudents to get the buttons in random order
     shuffleArray(randomStudents);
 
-    //Få fram fyra namn varav ett är rätt
+    //Map out the names
     const randomNames = randomStudents.map(students => students.name);
-    //console.log("random names:", randomNames);
 
-    //Sätt rätta studentens namn som bilden 
+    //Put the image of the "right student" as the source of the image
     studentImageEl.src = rightStudent.image;
 
     //Set the students name as data-name
@@ -221,15 +224,60 @@ const randomizeStudent = () => {
     });
 }
 
+const gameEnd = () => {
+		//Empty button-container
+		btnContainer.innerHTML = "";
+
+		//Switch picture to the final picture
+		studentImageEl.src = 'assets/images/victory.png';
+
+		//Show results
+		showResults.innerText = `Your score is ${correctGuesses}/${totalGuesses}!`;
+
+		if (correctGuesses > highscore) {
+			highscore = correctGuesses;
+			showHighscore.innerText = `New highscore!🥳`;
+			console.log(highscore);
+		} else {
+			showHighscore.innerText = `Not a new highscore...Try again!`;
+		}
+
+		//Play again
+		playAgainContainer.innerHTML = '<button class="btn btn-success m-2" id="play-again">Play again</button>';
+
+		//Assign the button as a value to the playAgain variable
+		playAgain = document.querySelector('#play-again');
+
+		//Add event listener to the play again-button
+		playAgain.addEventListener("click", e => {
+
+			//Empty h1 with score
+			showResults.innerText = "";
+
+			//Empty h2 with highscore
+			showHighscore.innerText = "";
+
+			//Reset the score
+			totalGuesses = 0;
+			correctGuesses = 0;
+
+			//Empty play again container
+			playAgainContainer.innerHTML = "";
+
+			//Play again
+			randomizeStudent();
+
+		});  
+}
+
+//Calls the function to get a student
 randomizeStudent();
 
-//Added event listener to the button container
+//Add event listener to the button container
 btnContainer.addEventListener("click", e => {
 
     //check if user clicked on a button
-   if (e.target.tagName == "BUTTON" && totalGuesses < 20) {
-	   //Empty button-container
-		btnContainer.innerHTML = "";
+   if (e.target.tagName == "BUTTON") {
 
 		//Add a guess to total guesses
 		totalGuesses += 1;
@@ -240,43 +288,34 @@ btnContainer.addEventListener("click", e => {
             console.log("Right answer!🥳");
             correctGuesses += 1;
             console.log(`You have ${correctGuesses} correct guesses out of a total of ${totalGuesses}`);
-			//Call the function
-			randomizeStudent();
+			clickedBtn.classList.replace("btn-light", "btn-success");
+
+			setTimeout(function(){ 
+				if (totalGuesses < 20) {
+					//Call the function
+					randomizeStudent();
+					} else {
+						//End the game
+						gameEnd();
+					}
+			}, 1000);
+
             
         } else if (clickedBtn.innerText !== studentImageEl.dataset.name) {
             console.log("Incorrect answer!🤥");
             console.log(`You have ${correctGuesses} correct guesses out of a total of ${totalGuesses}`);
-			//Call the function
-			randomizeStudent();
+			clickedBtn.classList.replace("btn-light", "btn-danger");
+
+			setTimeout(function(){ 
+				if (totalGuesses < 20) {
+					//Call the function
+					randomizeStudent();
+					} else {
+						//End the game
+						gameEnd();
+					}
+			}, 1000);
         } 
-   } else if (e.target.tagName == "BUTTON") {
-		//Empty button-container
-		btnContainer.innerHTML = "";
-
-		//Switch picture 
-		studentImageEl.src = 'assets/images/victory.png';
-
-		//Show results
-		showResults.innerText = `Your score is ${correctGuesses}/${totalGuesses}!`;
-
-		//Play again
-		btnContainer.innerHTML = '<button class="btn btn-success m-2 onclick=playAgain()>Play again</button>';
-
-		//Save the button in a variable
-		/* const playAgain = document.querySelector('#play-again');
-
-		playAgain.addEventListener("click", e => {
-			//Save score
-			highScore.push(correctGuesses);
-
-			//Empty button-container
-			btnContainer.innerHTML = "";
-
-			//Play again
-			randomizeStudent();
-		}); */
-		
-
    }
 }
 );
