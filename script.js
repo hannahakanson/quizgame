@@ -160,6 +160,7 @@ const students = [
 	},
 ];
 
+//!Använd denna för att kunna splicea ut elever som redan blivit valda?
 //Array clone
 const cloneStudents = [...students];
 console.log(cloneStudents);
@@ -232,14 +233,14 @@ const gameEnd = () => {
 		studentImageEl.src = 'assets/images/victory.png';
 
 		//Show results
-		showResults.innerText = `Your score is ${correctGuesses}/${totalGuesses}!`;
+		showResults.innerText = `Your score is ${correctGuesses}/${totalGuesses}`;
 
 		if (correctGuesses > highscore) {
 			highscore = correctGuesses;
 			showHighscore.innerText = `New highscore! 🥳`;
 			console.log(highscore);
 		} else {
-			showHighscore.innerText = `Not your best...Try again!`;
+			showHighscore.innerText = `Not your best...Try again! 🤓`;
 		}
 
 		//Play again
