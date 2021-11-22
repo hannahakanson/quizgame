@@ -161,11 +161,15 @@ const students = [
 	},
 ];
 
+//Array clone
+const cloneStudents = [...students];
+console.log(cloneStudents);
 
 //Query selector consts
 const studentImageEl = document.querySelector('#studentImg');
 const btnContainer = document.querySelector("#button-container");
-
+const showResults = document.querySelector("#correct-answers");
+const highScore = [];
 
 //Variables for score
 let totalGuesses = 0;
@@ -198,7 +202,7 @@ const randomizeStudent = () => {
     const rightStudent = randomStudents[0];
     //console.log(rightStudent);
 
-    //Shuffle randomstudents
+    //Shuffle randomstudents för att den rätta inte ska komma som första knapp
     shuffleArray(randomStudents);
 
     //Få fram fyra namn varav ett är rätt
@@ -217,40 +221,64 @@ const randomizeStudent = () => {
     });
 }
 
+randomizeStudent();
 
 //Added event listener to the button container
 btnContainer.addEventListener("click", e => {
 
-    btnContainer.innerHTML = "";
-
     //check if user clicked on a button
-   if (e.target.tagName == "BUTTON") {
+   if (e.target.tagName == "BUTTON" && totalGuesses < 20) {
+	   //Empty button-container
+		btnContainer.innerHTML = "";
+
+		//Add a guess to total guesses
+		totalGuesses += 1;
     
         let clickedBtn = e.target;
 
         if (clickedBtn.innerText == studentImageEl.dataset.name) {
             console.log("Right answer!🥳");
             correctGuesses += 1;
-            totalGuesses += 1;
             console.log(`You have ${correctGuesses} correct guesses out of a total of ${totalGuesses}`);
+			//Call the function
+			randomizeStudent();
             
-        } else if (clickedBtn.innerText == "Start") {
-            console.log("Start");
-
         } else if (clickedBtn.innerText !== studentImageEl.dataset.name) {
             console.log("Incorrect answer!🤥");
             totalGuesses += 1;
             console.log(`You have ${correctGuesses} correct guesses out of a total of ${totalGuesses}`);
+			//Call the function
+			randomizeStudent();
         } 
+   } else if (e.target.tagName == "BUTTON") {
+		//Empty button-container
+		btnContainer.innerHTML = "";
 
-        //Call the function
-        randomizeStudent();
+		//Switch picture 
+		studentImageEl.src = 'assets/images/victory.png';
+
+		//Show results
+		showResults.innerText = `Your score is ${correctGuesses}/${totalGuesses}!`;
+
+		//Play again
+		btnContainer.innerHTML = '<button class="btn btn-success m-2 onclick=playAgain()>Play again</button>';
+
+		//Save the button in a variable
+		/* const playAgain = document.querySelector('#play-again');
+
+		playAgain.addEventListener("click", e => {
+			//Save score
+			highScore.push(correctGuesses);
+
+			//Empty button-container
+			btnContainer.innerHTML = "";
+
+			//Play again
+			randomizeStudent();
+		}); */
+		
+
    }
-        /*
-        !Gör en funktion för det som ska hända efter 20 gissningar
-        */
-
-
 }
 );
 

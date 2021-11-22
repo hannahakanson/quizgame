@@ -11,8 +11,15 @@ body {
 
 #studentImg {
     width: 300px;
-}
+} 
 
 .button-container button {
     width: 300px;
+}
+
+
+@media only screen and (min-width: 768px) {
+    #studentImg {
+        width: auto;
+    }
 }
