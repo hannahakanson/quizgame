@@ -245,7 +245,6 @@ btnContainer.addEventListener("click", e => {
             
         } else if (clickedBtn.innerText !== studentImageEl.dataset.name) {
             console.log("Incorrect answer!🤥");
-            totalGuesses += 1;
             console.log(`You have ${correctGuesses} correct guesses out of a total of ${totalGuesses}`);
 			//Call the function
 			randomizeStudent();
