@@ -19,9 +19,14 @@ body {
     background-color: rgb(242, 241, 245);
     color: rgb(8, 8, 8);
 }
- 
+
 h1, h4 {
     font-family: 'Press Start 2P', cursive;
+}
+
+#guess-classmate {
+    color: white;
+    text-shadow: 3px 3px black;
 }
 
 #studentImg {

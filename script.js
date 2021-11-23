@@ -171,7 +171,6 @@ const btnContainer = document.querySelector("#button-container");
 const showResults = document.querySelector("#correct-answers");
 const playAgainContainer = document.querySelector("#play-again-container");
 const showHighscore = document.querySelector("#highscore");
-let placeholder
 
 let playAgain;
 
