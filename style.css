@@ -36,10 +36,14 @@ h1, h3 {
     border-radius: 0;
 }
 
+.btn-outline-dark:hover {
+    background-color: unset;
+    color: black;
+}
+
 .button-container {
     margin: 80px;
 }
-
 
 
 @media only screen and (min-width: 679px) {
@@ -49,5 +53,10 @@ h1, h3 {
 
     .button-container {
         width: 800px;
+    }
+
+    .btn-outline-dark:hover {
+        background-color: black;
+        color: white;
     }
 }

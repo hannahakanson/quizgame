@@ -235,6 +235,7 @@ const randomizeStudent = () => {
 //Function to evaluate if game keeps on or not
 const evaluateAnswer = () => {
 	setTimeout(() => { 
+		//sets how many guesses per game you'll have
 		if (totalGuesses < 10) {
 			//Call the function
 			randomizeStudent();
