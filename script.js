@@ -162,10 +162,8 @@ const students = [
 ];
 
 
-
-//!Använd denna för att kunna splicea ut elever som redan blivit valda?
 //Array clone
-const cloneStudents = [...students];
+let clonedStudents = [...students];
 
 //Query selector consts
 const studentImageEl = document.querySelector('#studentImg');
@@ -173,6 +171,7 @@ const btnContainer = document.querySelector("#button-container");
 const showResults = document.querySelector("#correct-answers");
 const playAgainContainer = document.querySelector("#play-again-container");
 const showHighscore = document.querySelector("#highscore");
+let placeholder
 
 let playAgain;
 
@@ -199,14 +198,16 @@ const randomizeStudent = () => {
 	btnContainer.innerHTML = "";
 
     //Shuffle the array
-    shuffleArray(students);
+    shuffleArray(clonedStudents);
 
-	//!Kan man använda filter här istället?
     //Get four random students
-    const randomStudents = students.slice(0,4);
+    const randomStudents = clonedStudents.slice(0,4);
 
     //The first one is correct
     const rightStudent = randomStudents[0];
+
+	//Filter out the one that's correct so it doesn't appear twice
+	clonedStudents = clonedStudents.filter(person => person !== randomStudents[0]);
 
     //Shuffle randomstudents to get the buttons in random order
     shuffleArray(randomStudents);
@@ -229,6 +230,8 @@ const randomizeStudent = () => {
 			btnContainer.innerHTML += `<button class="btn btn-outline-dark m-2">${item}</button>`
 		}
     });
+
+	console.log(clonedStudents);
 }
 
 //Function to evaluate if game keeps on or not
@@ -286,6 +289,9 @@ const gameEnd = () => {
 
 			//Empty play again container
 			playAgainContainer.innerHTML = "";
+
+			//Reset the cloned array
+			clonedStudents = [...students];
 
 			//Play again
 			randomizeStudent();
