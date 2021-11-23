@@ -204,7 +204,6 @@ const randomizeStudent = () => {
 	//!Kan man använda filter här istället?
     //Get four random students
     const randomStudents = students.slice(0,4);
-    //console.log(randomStudents);
 
     //The first one is correct
     const rightStudent = randomStudents[0];
