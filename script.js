@@ -1,3 +1,4 @@
+
 //** QUIZ GAME */
 
 //Array with all students
@@ -160,10 +161,11 @@ const students = [
 	},
 ];
 
+
+
 //!Använd denna för att kunna splicea ut elever som redan blivit valda?
 //Array clone
 const cloneStudents = [...students];
-console.log(cloneStudents);
 
 //Query selector consts
 const studentImageEl = document.querySelector('#studentImg');
@@ -221,10 +223,29 @@ const randomizeStudent = () => {
 
     //Set the students name in the button
     randomNames.forEach(item => {
-        btnContainer.innerHTML += `<button class="btn btn-light m-2">${item}</button>`
+		//Check if it's the name of the right student to set an id for that button
+		if (item == rightStudent.name) {
+			btnContainer.innerHTML += `<button id="rightstudent" class="btn btn-outline-dark m-2">${item}</button>`
+		} else {
+			btnContainer.innerHTML += `<button class="btn btn-outline-dark m-2">${item}</button>`
+		}
     });
 }
 
+//Function to evaluate if game keeps on or not
+const evaluateAnswer = () => {
+	setTimeout(() => { 
+		if (totalGuesses < 10) {
+			//Call the function
+			randomizeStudent();
+			} else {
+				//End the game
+				gameEnd();
+			}
+	}, 1500);
+}
+
+//Function to end game and restart
 const gameEnd = () => {
 		//Empty button-container
 		btnContainer.innerHTML = "";
@@ -235,6 +256,7 @@ const gameEnd = () => {
 		//Show results
 		showResults.innerText = `Your score is ${correctGuesses}/${totalGuesses}`;
 
+		//Check if it's a new highscore
 		if (correctGuesses > highscore) {
 			highscore = correctGuesses;
 			showHighscore.innerText = `New highscore! 🥳`;
@@ -281,41 +303,31 @@ btnContainer.addEventListener("click", e => {
    if (e.target.tagName == "BUTTON") {
 
 		//Add a guess to total guesses
-		totalGuesses += 1;
+		totalGuesses++;
     
         let clickedBtn = e.target;
 
         if (clickedBtn.innerText == studentImageEl.dataset.name) {
             console.log("Right answer!🥳");
-            correctGuesses += 1;
+            correctGuesses++;
             console.log(`You have ${correctGuesses} correct guesses out of a total of ${totalGuesses}`);
-			clickedBtn.classList.replace("btn-light", "btn-success");
+			clickedBtn.classList.replace("btn-outline-dark", "btn-success");
 
-			setTimeout(() => { 
-				if (totalGuesses < 10) {
-					//Call the function
-					randomizeStudent();
-					} else {
-						//End the game
-						gameEnd();
-					}
-			}, 1000);
+			//Calls function to evaluate if the game keeps going or not
+			evaluateAnswer();
 
             
         } else if (clickedBtn.innerText !== studentImageEl.dataset.name) {
             console.log("Incorrect answer!🤥");
             console.log(`You have ${correctGuesses} correct guesses out of a total of ${totalGuesses}`);
-			clickedBtn.classList.replace("btn-light", "btn-danger");
+			clickedBtn.classList.replace("btn-outline-dark", "btn-danger");
 
-			setTimeout(() => { 
-				if (totalGuesses < 10) {
-					//Call the function
-					randomizeStudent();
-					} else {
-						//End the game
-						gameEnd();
-					}
-			}, 1000);
+			//Show the right answer
+			const rightBtn = document.querySelector("#rightstudent");
+			rightBtn.classList.replace("btn-outline-dark", "btn-success");
+
+			//Calls function to evaluate if the game keeps going or not
+			evaluateAnswer();
         } 
    }
 }
