@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Varela+Round&display=swap');
 
 * {
     margin: 0;
@@ -16,12 +16,16 @@ main {
 }
 
 body {
-    background-color: rgb(242, 241, 245);
-    color: rgb(8, 8, 8);
+    background: #43C6AC;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #F8FFAE, #43C6AC);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #F8FFAE, #43C6AC); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    color: rgb(0, 0, 0);
+    font-family: 'Varela Round', sans-serif;
 }
 
 h1, h4 {
     font-family: 'Press Start 2P', cursive;
+    overflow: visible;
 }
 
 #guess-classmate {
@@ -39,29 +43,42 @@ h1, h4 {
     width: 300px;
     box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5);
     border-radius: 0;
-}
-
-.btn-outline-dark:hover {
-    background-color: unset;
-    color: black;
-}
-
-.button-container {
-    margin: 80px;
+    height: 40px;
 }
 
 
 @media only screen and (min-width: 679px) {
     #studentImg {
-        width: 500px;
+        width: 400px;
     }
 
     .button-container {
         width: 800px;
     }
 
-    .btn-outline-dark:hover {
+    .btn-light:hover {
         background-color: black;
         color: white;
+    }
+
+    #guess-classmate {
+        padding: 20px;
+    }
+}
+
+@media only screen and (min-width: 992px) {
+    #guess-classmate {
+        padding: 30px;
+    }
+
+    #studentImg {
+        width: 420px;
+    }
+
+    .button-container button {
+        width: 320px;
+        box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5);
+        border-radius: 0;
+        height: 50px;
     }
 }

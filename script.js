@@ -169,8 +169,8 @@ let clonedStudents = [...students];
 const studentImageEl = document.querySelector('#studentImg');
 const btnContainer = document.querySelector("#button-container");
 const showResults = document.querySelector("#correct-answers");
-const playAgainContainer = document.querySelector("#play-again-container");
 const showHighscore = document.querySelector("#highscore");
+const playAgainContainer = document.querySelector("#play-again-container");
 
 let playAgain;
 
@@ -189,8 +189,8 @@ const shuffleArray = array => {
       array[j] = temp;
     }
 };
-    //console.log(array);
-
+    
+//Main game function
 const randomizeStudent = () => {
 
 	//Empty button-container
@@ -224,20 +224,18 @@ const randomizeStudent = () => {
     randomNames.forEach(item => {
 		//Check if it's the name of the right student to set an id for that button
 		if (item == rightStudent.name) {
-			btnContainer.innerHTML += `<button id="rightstudent" class="btn btn-outline-dark m-2">${item}</button>`
+			btnContainer.innerHTML += `<button id="rightstudent" class="btn btn-light m-2">${item}</button>`;
 		} else {
-			btnContainer.innerHTML += `<button class="btn btn-outline-dark m-2">${item}</button>`
+			btnContainer.innerHTML += `<button class="btn btn-light m-2">${item}</button>`;
 		}
     });
-
-	console.log(clonedStudents);
 }
 
 //Function to evaluate if game keeps on or not
 const evaluateAnswer = () => {
 	setTimeout(() => { 
 		//sets how many guesses per game you'll have
-		if (totalGuesses < 10) {
+		if (totalGuesses < 20) {
 			//Call the function
 			randomizeStudent();
 			} else {
@@ -262,7 +260,6 @@ const gameEnd = () => {
 		if (correctGuesses > highscore) {
 			highscore = correctGuesses;
 			showHighscore.innerText = `New highscore! 🥳`;
-			console.log(highscore);
 		} else {
 			showHighscore.innerText = `Not your best...Try again! 🤓`;
 		}
@@ -298,7 +295,7 @@ const gameEnd = () => {
 		});  
 }
 
-//Calls the function to get a student
+//Calls the game-function to get a student
 randomizeStudent();
 
 //Add event listener to the button container
@@ -315,21 +312,20 @@ btnContainer.addEventListener("click", e => {
         if (clickedBtn.innerText == studentImageEl.dataset.name) {
             console.log("Right answer!🥳");
             correctGuesses++;
-            console.log(`You have ${correctGuesses} correct guesses out of a total of ${totalGuesses}`);
-			clickedBtn.classList.replace("btn-outline-dark", "btn-success");
+			//Make button green
+			clickedBtn.classList.replace("btn-light", "btn-success");
 
 			//Calls function to evaluate if the game keeps going or not
 			evaluateAnswer();
-
             
         } else if (clickedBtn.innerText !== studentImageEl.dataset.name) {
             console.log("Incorrect answer!🤥");
-            console.log(`You have ${correctGuesses} correct guesses out of a total of ${totalGuesses}`);
-			clickedBtn.classList.replace("btn-outline-dark", "btn-danger");
+			//Make button red to show that the answer is wrong
+			clickedBtn.classList.replace("btn-light", "btn-danger");
 
-			//Show the right answer
+			//Make the right answer green to show the right anser
 			const rightBtn = document.querySelector("#rightstudent");
-			rightBtn.classList.replace("btn-outline-dark", "btn-success");
+			rightBtn.classList.replace("btn-light", "btn-success");
 
 			//Calls function to evaluate if the game keeps going or not
 			evaluateAnswer();
