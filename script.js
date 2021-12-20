@@ -193,6 +193,9 @@ const shuffleArray = array => {
 //Main game function
 const randomizeStudent = () => {
 
+	//Set pointer-event to auto you can guess
+	btnContainer.style.pointerEvents = "auto";
+
 	//Empty button-container
 	btnContainer.innerHTML = "";
 
@@ -304,6 +307,9 @@ btnContainer.addEventListener("click", e => {
     //check if user clicked on a button
    if (e.target.tagName == "BUTTON") {
 
+		//Set pointer-events to none to get only one guess
+		btnContainer.style.pointerEvents = "none";
+
 		//Add a guess to total guesses
 		totalGuesses++;
     
@@ -323,7 +329,7 @@ btnContainer.addEventListener("click", e => {
 			//Make button red to show that the answer is wrong
 			clickedBtn.classList.replace("btn-light", "btn-danger");
 
-			//Make the right answer green to show the right anser
+			//Make the right answer green to show the right answer
 			const rightBtn = document.querySelector("#rightstudent");
 			rightBtn.classList.replace("btn-light", "btn-success");
 
